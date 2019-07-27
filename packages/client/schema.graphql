@@ -1,0 +1,975 @@
+type AddToEventTalksPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  talksTalk: Talk
+  eventEvent: Event
+  talksTalkEdge: TalkEdge
+  eventEventEdge: EventEdge
+}
+
+input AddToEventTalksTalkInput {
+  eventEventId: ID!
+  talksTalkId: ID!
+  clientMutationId: String!
+}
+
+type AddToSpeakerTalksPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  talksTalk: Talk
+  speakerSpeaker: Speaker
+  talksTalkEdge: TalkEdge
+  speakerSpeakerEdge: SpeakerEdge
+}
+
+input AddToSpeakerTalksTalkInput {
+  speakerSpeakerId: ID!
+  talksTalkId: ID!
+  clientMutationId: String!
+}
+
+input CreateEvent {
+  name: String!
+  url: String!
+  talksIds: [ID!]
+  talks: [EventtalksTalk!]
+}
+
+input CreateEventInput {
+  name: String!
+  url: String!
+  talksIds: [ID!]
+  talks: [EventtalksTalk!]
+  clientMutationId: String!
+}
+
+type CreateEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+}
+
+input CreateSpeaker {
+  name: String!
+  profilePic: String!
+  talksIds: [ID!]
+  talks: [SpeakertalksTalk!]
+}
+
+input CreateSpeakerInput {
+  name: String!
+  profilePic: String!
+  talksIds: [ID!]
+  talks: [SpeakertalksTalk!]
+  clientMutationId: String!
+}
+
+type CreateSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+}
+
+input CreateTalk {
+  description: String!
+  name: String!
+  eventId: ID
+  event: TalkeventEvent
+  speakerId: ID
+  speaker: TalkspeakerSpeaker
+}
+
+input CreateTalkInput {
+  description: String!
+  name: String!
+  eventId: ID
+  event: TalkeventEvent
+  speakerId: ID
+  speaker: TalkspeakerSpeaker
+  clientMutationId: String!
+}
+
+type CreateTalkPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  talk: Talk
+  edge: TalkEdge
+  event: Event
+  speaker: Speaker
+}
+
+input CreateUser {
+  dateOfBirth: DateTime
+  name: String
+}
+
+# If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
+  viewer: Viewer!
+}
+
+scalar DateTime
+
+input DeleteEventInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+  deletedId: ID
+}
+
+input DeleteSpeakerInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+  deletedId: ID
+}
+
+input DeleteTalkInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteTalkPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  talk: Talk
+  edge: TalkEdge
+  event: Event
+  speaker: Speaker
+  deletedId: ID
+}
+
+input DeleteUserInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+  deletedId: ID
+}
+
+type Event implements Node {
+  id: ID!
+  name: String!
+  talks(
+    filter: TalkFilter
+    orderBy: TalkOrderBy
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TalkConnection
+  url: String!
+}
+
+# A connection to a list of items.
+type EventConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  # A list of edges.
+  edges: [EventEdge]
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type EventEdge {
+  # The item at the end of the edge.
+  node: Event!
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input EventFilter {
+  # Logical AND on all given filters.
+  AND: [EventFilter!]
+  # Logical OR on all given filters.
+  OR: [EventFilter!]
+  id: ID
+  # All values that are not equal to given value.
+  id_not: ID
+  # All values that are contained in given list.
+  id_in: [ID!]
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+  # All values less than the given value.
+  id_lt: ID
+  # All values less than or equal the given value.
+  id_lte: ID
+  # All values greater than the given value.
+  id_gt: ID
+  # All values greater than or equal the given value.
+  id_gte: ID
+  # All values containing the given string.
+  id_contains: ID
+  # All values not containing the given string.
+  id_not_contains: ID
+  # All values starting with the given string.
+  id_starts_with: ID
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+  # All values ending with the given string.
+  id_ends_with: ID
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+  # All values that are not equal to given value.
+  name_not: String
+  # All values that are contained in given list.
+  name_in: [String!]
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+  # All values less than the given value.
+  name_lt: String
+  # All values less than or equal the given value.
+  name_lte: String
+  # All values greater than the given value.
+  name_gt: String
+  # All values greater than or equal the given value.
+  name_gte: String
+  # All values containing the given string.
+  name_contains: String
+  # All values not containing the given string.
+  name_not_contains: String
+  # All values starting with the given string.
+  name_starts_with: String
+  # All values not starting with the given string.
+  name_not_starts_with: String
+  # All values ending with the given string.
+  name_ends_with: String
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  url: String
+  # All values that are not equal to given value.
+  url_not: String
+  # All values that are contained in given list.
+  url_in: [String!]
+  # All values that are not contained in given list.
+  url_not_in: [String!]
+  # All values less than the given value.
+  url_lt: String
+  # All values less than or equal the given value.
+  url_lte: String
+  # All values greater than the given value.
+  url_gt: String
+  # All values greater than or equal the given value.
+  url_gte: String
+  # All values containing the given string.
+  url_contains: String
+  # All values not containing the given string.
+  url_not_contains: String
+  # All values starting with the given string.
+  url_starts_with: String
+  # All values not starting with the given string.
+  url_not_starts_with: String
+  # All values ending with the given string.
+  url_ends_with: String
+  # All values not ending with the given string.
+  url_not_ends_with: String
+  talks_every: TalkFilter
+  talks_some: TalkFilter
+  talks_none: TalkFilter
+}
+
+enum EventOrderBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  url_ASC
+  url_DESC
+}
+
+input EventtalksTalk {
+  description: String!
+  name: String!
+  speakerId: ID
+  speaker: TalkspeakerSpeaker
+}
+
+# HelloPayload
+type HelloPayload {
+  message: String!
+}
+
+input InvokeFunctionInput {
+  name: String!
+  input: String!
+  clientMutationId: String
+}
+
+type InvokeFunctionPayload {
+  result: String!
+  clientMutationId: String
+}
+
+type Mutation {
+  createEvent(input: CreateEventInput!): CreateEventPayload
+  createSpeaker(input: CreateSpeakerInput!): CreateSpeakerPayload
+  createTalk(input: CreateTalkInput!): CreateTalkPayload
+  updateEvent(input: UpdateEventInput!): UpdateEventPayload
+  updateSpeaker(input: UpdateSpeakerInput!): UpdateSpeakerPayload
+  updateTalk(input: UpdateTalkInput!): UpdateTalkPayload
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+  updateOrCreateEvent(
+    input: UpdateOrCreateEventInput!
+  ): UpdateOrCreateEventPayload
+  updateOrCreateSpeaker(
+    input: UpdateOrCreateSpeakerInput!
+  ): UpdateOrCreateSpeakerPayload
+  updateOrCreateTalk(input: UpdateOrCreateTalkInput!): UpdateOrCreateTalkPayload
+  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  deleteEvent(input: DeleteEventInput!): DeleteEventPayload
+  deleteSpeaker(input: DeleteSpeakerInput!): DeleteSpeakerPayload
+  deleteTalk(input: DeleteTalkInput!): DeleteTalkPayload
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+  addToEventTalks(input: AddToEventTalksTalkInput!): AddToEventTalksPayload
+  addToSpeakerTalks(
+    input: AddToSpeakerTalksTalkInput!
+  ): AddToSpeakerTalksPayload
+  createUser(input: SignupUserInput!): CreateUserPayload!
+  invokeFunction(input: InvokeFunctionInput!): InvokeFunctionPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Query {
+  viewer: Viewer!
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+input SignupUserInput {
+  dateOfBirth: DateTime
+  name: String
+  clientMutationId: String!
+}
+
+type Speaker implements Node {
+  id: ID!
+  name: String!
+  profilePic: String!
+  talks(
+    filter: TalkFilter
+    orderBy: TalkOrderBy
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TalkConnection
+}
+
+# A connection to a list of items.
+type SpeakerConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  # A list of edges.
+  edges: [SpeakerEdge]
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type SpeakerEdge {
+  # The item at the end of the edge.
+  node: Speaker!
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input SpeakerFilter {
+  # Logical AND on all given filters.
+  AND: [SpeakerFilter!]
+  # Logical OR on all given filters.
+  OR: [SpeakerFilter!]
+  id: ID
+  # All values that are not equal to given value.
+  id_not: ID
+  # All values that are contained in given list.
+  id_in: [ID!]
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+  # All values less than the given value.
+  id_lt: ID
+  # All values less than or equal the given value.
+  id_lte: ID
+  # All values greater than the given value.
+  id_gt: ID
+  # All values greater than or equal the given value.
+  id_gte: ID
+  # All values containing the given string.
+  id_contains: ID
+  # All values not containing the given string.
+  id_not_contains: ID
+  # All values starting with the given string.
+  id_starts_with: ID
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+  # All values ending with the given string.
+  id_ends_with: ID
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+  # All values that are not equal to given value.
+  name_not: String
+  # All values that are contained in given list.
+  name_in: [String!]
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+  # All values less than the given value.
+  name_lt: String
+  # All values less than or equal the given value.
+  name_lte: String
+  # All values greater than the given value.
+  name_gt: String
+  # All values greater than or equal the given value.
+  name_gte: String
+  # All values containing the given string.
+  name_contains: String
+  # All values not containing the given string.
+  name_not_contains: String
+  # All values starting with the given string.
+  name_starts_with: String
+  # All values not starting with the given string.
+  name_not_starts_with: String
+  # All values ending with the given string.
+  name_ends_with: String
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  profilePic: String
+  # All values that are not equal to given value.
+  profilePic_not: String
+  # All values that are contained in given list.
+  profilePic_in: [String!]
+  # All values that are not contained in given list.
+  profilePic_not_in: [String!]
+  # All values less than the given value.
+  profilePic_lt: String
+  # All values less than or equal the given value.
+  profilePic_lte: String
+  # All values greater than the given value.
+  profilePic_gt: String
+  # All values greater than or equal the given value.
+  profilePic_gte: String
+  # All values containing the given string.
+  profilePic_contains: String
+  # All values not containing the given string.
+  profilePic_not_contains: String
+  # All values starting with the given string.
+  profilePic_starts_with: String
+  # All values not starting with the given string.
+  profilePic_not_starts_with: String
+  # All values ending with the given string.
+  profilePic_ends_with: String
+  # All values not ending with the given string.
+  profilePic_not_ends_with: String
+  talks_every: TalkFilter
+  talks_some: TalkFilter
+  talks_none: TalkFilter
+}
+
+enum SpeakerOrderBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  profilePic_ASC
+  profilePic_DESC
+}
+
+input SpeakertalksTalk {
+  description: String!
+  name: String!
+  eventId: ID
+  event: TalkeventEvent
+}
+
+type Talk implements Node {
+  description: String!
+  event(filter: EventFilter): Event!
+  id: ID!
+  name: String!
+  speaker(filter: SpeakerFilter): Speaker!
+}
+
+# A connection to a list of items.
+type TalkConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  # A list of edges.
+  edges: [TalkEdge]
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type TalkEdge {
+  # The item at the end of the edge.
+  node: Talk!
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input TalkeventEvent {
+  name: String!
+  url: String!
+  talksIds: [ID!]
+  talks: [EventtalksTalk!]
+}
+
+input TalkFilter {
+  # Logical AND on all given filters.
+  AND: [TalkFilter!]
+  # Logical OR on all given filters.
+  OR: [TalkFilter!]
+  description: String
+  # All values that are not equal to given value.
+  description_not: String
+  # All values that are contained in given list.
+  description_in: [String!]
+  # All values that are not contained in given list.
+  description_not_in: [String!]
+  # All values less than the given value.
+  description_lt: String
+  # All values less than or equal the given value.
+  description_lte: String
+  # All values greater than the given value.
+  description_gt: String
+  # All values greater than or equal the given value.
+  description_gte: String
+  # All values containing the given string.
+  description_contains: String
+  # All values not containing the given string.
+  description_not_contains: String
+  # All values starting with the given string.
+  description_starts_with: String
+  # All values not starting with the given string.
+  description_not_starts_with: String
+  # All values ending with the given string.
+  description_ends_with: String
+  # All values not ending with the given string.
+  description_not_ends_with: String
+  id: ID
+  # All values that are not equal to given value.
+  id_not: ID
+  # All values that are contained in given list.
+  id_in: [ID!]
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+  # All values less than the given value.
+  id_lt: ID
+  # All values less than or equal the given value.
+  id_lte: ID
+  # All values greater than the given value.
+  id_gt: ID
+  # All values greater than or equal the given value.
+  id_gte: ID
+  # All values containing the given string.
+  id_contains: ID
+  # All values not containing the given string.
+  id_not_contains: ID
+  # All values starting with the given string.
+  id_starts_with: ID
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+  # All values ending with the given string.
+  id_ends_with: ID
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+  # All values that are not equal to given value.
+  name_not: String
+  # All values that are contained in given list.
+  name_in: [String!]
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+  # All values less than the given value.
+  name_lt: String
+  # All values less than or equal the given value.
+  name_lte: String
+  # All values greater than the given value.
+  name_gt: String
+  # All values greater than or equal the given value.
+  name_gte: String
+  # All values containing the given string.
+  name_contains: String
+  # All values not containing the given string.
+  name_not_contains: String
+  # All values starting with the given string.
+  name_starts_with: String
+  # All values not starting with the given string.
+  name_not_starts_with: String
+  # All values ending with the given string.
+  name_ends_with: String
+  # All values not ending with the given string.
+  name_not_ends_with: String
+  event: EventFilter
+  speaker: SpeakerFilter
+}
+
+enum TalkOrderBy {
+  description_ASC
+  description_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+input TalkspeakerSpeaker {
+  name: String!
+  profilePic: String!
+  talksIds: [ID!]
+  talks: [SpeakertalksTalk!]
+}
+
+input UpdateEvent {
+  id: ID!
+  name: String
+  url: String
+  talksIds: [ID!]
+  talks: [EventtalksTalk!]
+}
+
+input UpdateEventInput {
+  id: ID!
+  name: String
+  url: String
+  talksIds: [ID!]
+  talks: [EventtalksTalk!]
+  clientMutationId: String!
+}
+
+type UpdateEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+}
+
+input UpdateOrCreateEventInput {
+  update: UpdateEvent!
+  create: CreateEvent!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateEventPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  event: Event
+  edge: EventEdge
+}
+
+input UpdateOrCreateSpeakerInput {
+  update: UpdateSpeaker!
+  create: CreateSpeaker!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+}
+
+input UpdateOrCreateTalkInput {
+  update: UpdateTalk!
+  create: CreateTalk!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateTalkPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  talk: Talk
+  edge: TalkEdge
+  event: Event
+  speaker: Speaker
+}
+
+input UpdateOrCreateUserInput {
+  update: UpdateUser!
+  create: CreateUser!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+input UpdateSpeaker {
+  id: ID!
+  name: String
+  profilePic: String
+  talksIds: [ID!]
+  talks: [SpeakertalksTalk!]
+}
+
+input UpdateSpeakerInput {
+  id: ID!
+  name: String
+  profilePic: String
+  talksIds: [ID!]
+  talks: [SpeakertalksTalk!]
+  clientMutationId: String!
+}
+
+type UpdateSpeakerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  speaker: Speaker
+  edge: SpeakerEdge
+}
+
+input UpdateTalk {
+  description: String
+  id: ID!
+  name: String
+  eventId: ID
+  event: TalkeventEvent
+  speakerId: ID
+  speaker: TalkspeakerSpeaker
+}
+
+input UpdateTalkInput {
+  description: String
+  id: ID!
+  name: String
+  eventId: ID
+  event: TalkeventEvent
+  speakerId: ID
+  speaker: TalkspeakerSpeaker
+  clientMutationId: String!
+}
+
+type UpdateTalkPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  talk: Talk
+  edge: TalkEdge
+  event: Event
+  speaker: Speaker
+}
+
+input UpdateUser {
+  dateOfBirth: DateTime
+  id: ID!
+  name: String
+}
+
+input UpdateUserInput {
+  dateOfBirth: DateTime
+  id: ID!
+  name: String
+  clientMutationId: String!
+}
+
+type UpdateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+type User implements Node {
+  dateOfBirth: DateTime
+  id: ID!
+  name: String
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  # A list of edges.
+  edges: [UserEdge]
+  # Count of filtered result set without considering pagination arguments
+  count: Int!
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge.
+  node: User!
+  # A cursor for use in pagination.
+  cursor: String!
+}
+
+input UserFilter {
+  # Logical AND on all given filters.
+  AND: [UserFilter!]
+  # Logical OR on all given filters.
+  OR: [UserFilter!]
+  dateOfBirth: DateTime
+  # All values that are not equal to given value.
+  dateOfBirth_not: DateTime
+  # All values that are contained in given list.
+  dateOfBirth_in: [DateTime!]
+  # All values that are not contained in given list.
+  dateOfBirth_not_in: [DateTime!]
+  # All values less than the given value.
+  dateOfBirth_lt: DateTime
+  # All values less than or equal the given value.
+  dateOfBirth_lte: DateTime
+  # All values greater than the given value.
+  dateOfBirth_gt: DateTime
+  # All values greater than or equal the given value.
+  dateOfBirth_gte: DateTime
+  id: ID
+  # All values that are not equal to given value.
+  id_not: ID
+  # All values that are contained in given list.
+  id_in: [ID!]
+  # All values that are not contained in given list.
+  id_not_in: [ID!]
+  # All values less than the given value.
+  id_lt: ID
+  # All values less than or equal the given value.
+  id_lte: ID
+  # All values greater than the given value.
+  id_gt: ID
+  # All values greater than or equal the given value.
+  id_gte: ID
+  # All values containing the given string.
+  id_contains: ID
+  # All values not containing the given string.
+  id_not_contains: ID
+  # All values starting with the given string.
+  id_starts_with: ID
+  # All values not starting with the given string.
+  id_not_starts_with: ID
+  # All values ending with the given string.
+  id_ends_with: ID
+  # All values not ending with the given string.
+  id_not_ends_with: ID
+  name: String
+  # All values that are not equal to given value.
+  name_not: String
+  # All values that are contained in given list.
+  name_in: [String!]
+  # All values that are not contained in given list.
+  name_not_in: [String!]
+  # All values less than the given value.
+  name_lt: String
+  # All values less than or equal the given value.
+  name_lte: String
+  # All values greater than the given value.
+  name_gt: String
+  # All values greater than or equal the given value.
+  name_gte: String
+  # All values containing the given string.
+  name_contains: String
+  # All values not containing the given string.
+  name_not_contains: String
+  # All values starting with the given string.
+  name_starts_with: String
+  # All values not starting with the given string.
+  name_not_starts_with: String
+  # All values ending with the given string.
+  name_ends_with: String
+  # All values not ending with the given string.
+  name_not_ends_with: String
+}
+
+enum UserOrderBy {
+  dateOfBirth_ASC
+  dateOfBirth_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+# This is the famous Relay viewer object
+type Viewer {
+  allEvents(
+    filter: EventFilter
+    orderBy: EventOrderBy
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): EventConnection!
+  allSpeakers(
+    filter: SpeakerFilter
+    orderBy: SpeakerOrderBy
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): SpeakerConnection!
+  allTalks(
+    filter: TalkFilter
+    orderBy: TalkOrderBy
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TalkConnection!
+  allUsers(
+    filter: UserFilter
+    orderBy: UserOrderBy
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserConnection!
+  user: User
+  Event(id: ID): Event
+  Speaker(id: ID): Speaker
+  Talk(id: ID): Talk
+  User(id: ID): User
+  # hello
+  hello(name: String): HelloPayload
+  id: ID!
+}
+
