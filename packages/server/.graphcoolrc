@@ -1,0 +1,3 @@
+targets:
+  smart-data-fetching-demo-server: shared-eu-west-1/cjyln47wx5f3v0113c4i878lo
+  default: smart-data-fetching-demo-server

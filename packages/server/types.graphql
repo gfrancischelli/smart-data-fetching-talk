@@ -11,6 +11,29 @@ type User @model {
   # posts: [Post!]! @relation(name: "UserPosts")
 }
 
+type Talk @model {
+  id: ID! @isUnique
+  name: String!
+  description: String!
+
+  event: Event! @relation(name: "EventTalks")
+
+  speaker: Speaker! @relation(name: "SpeakerTalks")
+}
+
+type Event @model {
+  id: ID! @isUnique
+  name: String!
+  url: String!
+  talks: [Talk!]! @relation(name: "EventTalks")
+}
+
+type Speaker @model {
+  id: ID! @isUnique
+  name: String!
+  profilePic: String!
+  talks: [Talk!]! @relation(name: "SpeakerTalks")
+}
 
 # Uncomment the model below as well
 
