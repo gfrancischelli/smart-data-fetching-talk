@@ -1,0 +1,17 @@
+query {
+  talks {
+    name
+
+    description
+    tags
+    event {
+      name
+      url
+    }
+
+    speaker {
+      username
+      profile_picture
+    }
+  }
+}

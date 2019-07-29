@@ -1,0 +1,16 @@
+{
+  "name": "deck",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "now-build": "mdx-deck build --no-html ./index.mdx && cp -r ./images dist",
+    "build": "mdx-deck build index.mdx",
+    "start": "mdx-deck index.mdx"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "mdx-deck": "^1.7.7",
+    "mdx-deck-code-surfer": "^0.5.5",
+    "raw-loader": "^0.5.1"
+  }
+}
