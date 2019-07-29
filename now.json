@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "smart data fetching",
+  "public": true,
+  "alias": ["smart-data-fetching.now.sh"],
+  "builds": [
+    { "src": "packages/deck/images/**", "use": "@now/static" },
+    {
+      "src": "packages/deck/package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [{ "src": "/(.*)", "dest": "/packages/deck/$1" }]
+}
