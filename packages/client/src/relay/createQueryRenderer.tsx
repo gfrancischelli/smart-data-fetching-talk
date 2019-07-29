@@ -19,7 +19,7 @@ export const createQueryRenderer = (
           return <div>Loading</div>;
         }
         // @ts-ignore
-        return <Component query={props.viewer} />;
+        return <Component query={props} />;
       }}
     />
   );
